@@ -9,7 +9,11 @@ import { inViewport } from './viewport';
 
 class inViewRegistry {
 
-    constructor(elements) {
+    constructor(options) {
+        //support old syntax where you pass in elements and not a options object
+        const elements = (typeof options.elements === "undefined") ? options : options.elements;
+
+        this.offset = options.offset
         this.current  = [];
         this.elements = elements;
         this.handlers = { enter: [], exit: [] };
@@ -21,9 +25,11 @@ class inViewRegistry {
     * changes states, fire an event and operate on current.
     */
     check(offset) {
+        //console.log(this);
         this.elements.forEach(el => {
-
-            let passes  = inViewport(el, offset);
+            const offsetValue = this.offset ? this.offset : offset
+            let passes  = inViewport(el, offsetValue);
+            //let passes  = inViewport(el, offset);
             let index   = this.current.indexOf(el);
             let current = index > -1;
             let entered = passes && !current;

@@ -35,12 +35,18 @@ const inView = () => {
     * The main interface. Take a selector and retrieve
     * the associated registry or create a new one.
     */
-    let control = (selector) => {
+    let control = (selector, selectorOffset) => {
 
         if (typeof selector !== 'string') return;
 
         // Get an up-to-date list of elements.
         let elements = [].slice.call(document.querySelectorAll(selector));
+
+        //TODO: a new selector will not update the offset.
+        const settings = {
+          elements: elements,
+          offset: (typeof selectorOffset === 'number') ? selectorOffset : offset
+        };
 
         // If the registry exists, update the elements.
         if (selectors.history.indexOf(selector) > -1) {
@@ -49,7 +55,7 @@ const inView = () => {
 
         // If it doesn't exist, create a new registry.
         else {
-            selectors[selector] = Registry(elements);
+            selectors[selector] = Registry(settings);
             selectors.history.push(selector);
         }
 
