@@ -1,3 +1,24 @@
+this is a fork to support multiple inview instance, see [camwiegert.github.io/in-view](https://camwiegert.github.io/in-view) for master
+
+# Supports Multiple instances
+
+```js
+var inView = require('in-view');
+var inview1 =  inView();
+var inview2 =  inView();
+
+inview1.offset(200);
+inview2.offset(350);
+
+inview1('h1')
+  .on('enter', onEnter)
+  .on('exit', onExit);
+
+inview2('h2')
+  .on('enter', onEnter2)
+  .on('exit', onExit2);
+```
+
 # in-view.js :eyes:
 
 Get notified when a DOM element enters or exits the viewport. A small (~1.9kb gzipped), dependency-free, javascript utility for IE9+.
