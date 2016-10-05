@@ -55,18 +55,24 @@ const inView = () => {
     */
     let control = (elements) => {
 
-        if(typeof elements === "object") {
-          elements = Array.prototype.slice.call(elements);
-        }
 
-        if(isNode(elements)) {
-          elements = [elements];
-        }
+         // Get an up-to-date list of elements.
+         elements = [].slice.call(elements);
 
-        selectors[++registerId] = Registry(elements, offset);
+         // If the registry exists, update the elements.
+         if (selectors.history.indexOf("singelton") > -1) {
+             selectors["singelton"].elements = elements;
+         }
 
-        return selectors[registerId];
-    };
+         // If it doesn't exist, create a new registry.
+         else {
+             selectors["singelton"] = Registry(elements, offset);
+             selectors.history.push("singelton");
+         }
+
+         return selectors["singelton"];
+     };
+
 
     /**
     * Mutate the offset object with either an object
