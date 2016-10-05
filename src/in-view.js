@@ -48,29 +48,32 @@ const inView = () => {
     }
 
     /**
-    * The main interface. Take a selector and retrieve
+    * The main interface. Takes a array of Dom Nodes and retrieve
     * the associated registry or create a new one.
     */
-    let control = (selector) => {
+    let control = (elements) => {
 
-        if (typeof selector !== 'string') return;
+        if(isNode(elements)) {
+           elements = [elements];
+         }
 
-        // Get an up-to-date list of elements.
-        let elements = [].slice.call(document.querySelectorAll(selector));
+         // Get an up-to-date list of elements.
+         elements = [].slice.call(elements);
 
-        // If the registry exists, update the elements.
-        if (selectors.history.indexOf(selector) > -1) {
-            selectors[selector].elements = elements;
-        }
+         // If the registry exists, update the elements.
+         if (selectors.history.indexOf("singelton") > -1) {
+             selectors["singelton"].elements = elements;
+         }
 
-        // If it doesn't exist, create a new registry.
-        else {
-            selectors[selector] = Registry(elements, offset);
-            selectors.history.push(selector);
-        }
+         // If it doesn't exist, create a new registry.
+         else {
+             selectors["singelton"] = Registry(elements, offset);
+             selectors.history.push("singelton");
+         }
 
-        return selectors[selector];
-    };
+         return selectors["singelton"];
+     };
+
 
     /**
     * Mutate the offset object with either an object
@@ -96,6 +99,13 @@ const inView = () => {
     return control;
 
 };
+
+function isNode(o){
+  return (
+    typeof Node === "object" ? o instanceof Node :
+    o && typeof o === "object" && typeof o.nodeType === "number" && typeof o.nodeName==="string"
+  );
+}
 
 // Export a singleton.
 export default inView;

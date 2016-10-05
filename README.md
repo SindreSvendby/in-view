@@ -1,6 +1,8 @@
 this is a fork to support multiple inview instance, see [camwiegert.github.io/in-view](https://camwiegert.github.io/in-view) for master
 
-# Supports Multiple instances
+# Difference from original
+
+## Supports Multiple instances and accepts a domNode or a NodeList
 
 ```js
 var inView = require('in-view');
@@ -10,11 +12,11 @@ var inview2 =  inView();
 inview1.offset(200);
 inview2.offset(350);
 
-inview1('h1')
+inview1(document.getElementById('uniqID'))
   .on('enter', onEnter)
   .on('exit', onExit);
 
-inview2('h2')
+inview2( document.getElementsByClassName('h2'))
   .on('enter', onEnter2)
   .on('exit', onExit2);
 ```
