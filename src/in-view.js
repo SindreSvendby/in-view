@@ -14,8 +14,6 @@ const inView = () => {
     const interval = 100;
     const triggers = ['scroll', 'resize', 'load'];
 
-    let registerId = 0
-
     /**
     * Maintain a hashmap of all registries, a history
     * of selectors to enumerate, and an offset object.
@@ -55,6 +53,9 @@ const inView = () => {
     */
     let control = (elements) => {
 
+        if(isNode(elements)) {
+           elements = [elements];
+         }
 
          // Get an up-to-date list of elements.
          elements = [].slice.call(elements);
