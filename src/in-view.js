@@ -55,13 +55,13 @@ const inView = () => {
     */
     let control = (elements) => {
 
+        if(typeof elements === "object") {
+          elements = Array.prototype.slice.call(elements);
+        }
+
         if(isNode(elements)) {
           elements = [elements];
         }
-
-        if (!Array.isArray(elements)) return;
-
-        elements = elements.filter(isNode);
 
         selectors[++registerId] = Registry(elements, offset);
 
